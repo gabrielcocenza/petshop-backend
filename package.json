@@ -1,5 +1,5 @@
 {
-  "name": "nextjs",
+  "name": "petshop-backend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,8 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "10.0.0",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
-  }
+    "bcrypt": "^5.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "micro": "^9.3.4",
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.10.15",
+    "mongoose-unique-validator": "^2.0.3",
+    "next": "^9.4.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "license": "MIT"
 }
