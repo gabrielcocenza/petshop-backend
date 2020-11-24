@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
         const salt = bcrypt.genSaltSync(saltRounds)
         const passwordHashed = bcrypt.hashSync(password, salt)
         const user = {
-            email: email,
+            ...body,
             password: passwordHashed
         }
 

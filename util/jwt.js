@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const { createError } = require('./errors')
 
 const { MONGODB_URI, MONGODB_DB, JWT_SECRET } = process.env
 
@@ -15,13 +14,19 @@ const createToken = (res, objectToSign) => {
     return newToken
 }
 
-const JWTParser = (req, res) => {
+const JWTParser = (req) => {
     if (!req.headers.authorization) {
-        throw createError(401, 'Needs Authentication')
+        return null
     }
 
     const token = req.headers.authorization.split(' ').pop()
-    return jwt.decode(token)
+    try{
+        const decoded = jwt.verify(token, JWT_SECRET)
+        return decoded
+    }
+    catch(err) {
+        return null
+    }
 }
 
 const lib = {
