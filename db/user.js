@@ -3,6 +3,10 @@ const model = require('mongoose').model
 const uniqueValidator = require('mongoose-unique-validator')
 
 const User = new Schema({
+  admin: {
+    type: Boolean,
+    default: false
+  },
   name: String,
   email: {
     type: String,

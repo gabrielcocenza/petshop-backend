@@ -29,7 +29,8 @@ module.exports = async (req, res) => {
 
         const dataToToken = {
             email,
-            id: user._id
+            id: user._id,
+            admin: user.admin
         }
 
         JWT.createToken(res, dataToToken)
