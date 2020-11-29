@@ -19,6 +19,7 @@ const User = new Schema({
   },
   address: String,
   birthdate: Date,
+  phone: String
 })
 
 User.plugin(uniqueValidator)

@@ -3,10 +3,18 @@ const model = require('mongoose').model
 const uniqueValidator = require('mongoose-unique-validator')
 
 const Supply = new Schema({
-    title: String,
+    name: String,
+    description: String,
     price: Number,
-    status: String,
-    units: Number,
+    stock: {
+        type: Number,
+        default: 0
+    },
+    sold: {
+        type: Number,
+        default: 0
+    },
+    photo: String,
 })
 
 Supply.plugin(uniqueValidator)
