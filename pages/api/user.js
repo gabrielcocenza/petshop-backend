@@ -2,12 +2,13 @@ const { createError } = require('../../util/errors')
 const User = require('../../db/user')
 const { json } = require('micro')
 const bcrypt = require('bcrypt')
+const cors = require('micro-cors')({origin: '*'})
 
 const saltRounds = 10;
 
 require('../../db/mongodb')
 
-module.exports = async (req, res) => {
+const handler = async (req, res) => {
     if(req.method === 'POST'){
         const body = req.body
         const { email, password } = body
@@ -41,3 +42,7 @@ module.exports = async (req, res) => {
         res.status(400).send(`Method not allowed!`)
     }
 }
+
+
+module.exports = cors(handler)
+  

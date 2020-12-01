@@ -4,8 +4,9 @@ const Sell = require('../../db/sell')
 const Supply = require('../../db/supply')
 
 require('../../db/mongodb')
+const cors = require('micro-cors')()
 
-module.exports = async (req, res) => {
+const handler  = async (req, res) => {
     if(req.method === 'POST'){
         const jwt = JWTParser(req, res)
         if (jwt) {
@@ -90,3 +91,6 @@ async function updateSupply(bill){
         })
     }
 }
+
+
+module.exports = cors(handler)

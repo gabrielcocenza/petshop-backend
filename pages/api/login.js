@@ -4,11 +4,10 @@ const JWT = require('../../util/jwt')
 
 const User = require('../../db/user')
 
-const { createError } = require('../../util/errors')
-
 require('../../db/mongodb')
+const cors = require('micro-cors')()
 
-module.exports = async (req, res) => {
+const handler = async (req, res) => {
     if(req.method === 'POST'){
         const body = req.body
         const { email, password } = body
@@ -37,3 +36,5 @@ module.exports = async (req, res) => {
         return res.status(200).send('Successful Login')
     }
 }
+
+module.exports = cors(handler)
