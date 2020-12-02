@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
     "jsonwebtoken": "^8.5.1",
     "micro": "^9.3.4",
     "mongodb": "^3.5.9",
