@@ -2,14 +2,26 @@ const { createError } = require('../../util/errors')
 const User = require('../../db/user')
 const { json } = require('micro')
 const bcrypt = require('bcrypt')
-const cors = require('micro-cors')({origin: '*'})
-
+// const cors = require('micro-cors')({origin: '*'})
+import Cors from 'cors'
+import initMiddleware from '../../lib/init-middleware'
 const saltRounds = 10;
 
 require('../../db/mongodb')
 
-const handler = async (req, res) => {
-    if(req.method === 'POST'){
+const cors = initMiddleware(
+  // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+  Cors({
+    // Only allow requests with GET, POST and OPTIONS
+    methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
+
+  })
+)
+
+export default async function handler (req, res) {
+  // Run cors
+  await cors(req, res)  
+  if(req.method === 'POST'){
         const body = req.body
         const { email, password } = body
         if (!email || !password) {
@@ -44,5 +56,5 @@ const handler = async (req, res) => {
 }
 
 
-module.exports = cors(handler)
+// module.exports = cors(handler)
   

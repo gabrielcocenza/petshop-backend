@@ -5,9 +5,20 @@ const JWT = require('../../util/jwt')
 const User = require('../../db/user')
 
 require('../../db/mongodb')
-const cors = require('micro-cors')()
 
-const handler = async (req, res) => {
+import Cors from 'cors'
+import initMiddleware from '../../lib/init-middleware'
+
+const cors = initMiddleware(
+    // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+    Cors({
+        // Only allow requests with GET, POST and OPTIONS
+        methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
+    })
+)
+
+export default async function handler (req, res) {
+    await cors(req, res)
     if(req.method === 'POST'){
         const body = req.body
         const { email, password } = body
@@ -36,5 +47,3 @@ const handler = async (req, res) => {
         return res.status(200).send('Successful Login')
     }
 }
-
-module.exports = cors(handler)

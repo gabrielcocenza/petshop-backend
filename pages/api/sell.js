@@ -4,9 +4,19 @@ const Sell = require('../../db/sell')
 const Supply = require('../../db/supply')
 
 require('../../db/mongodb')
-const cors = require('micro-cors')()
+import Cors from 'cors'
+import initMiddleware from '../../lib/init-middleware'
 
-const handler  = async (req, res) => {
+const cors = initMiddleware(
+    // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+    Cors({
+        // Only allow requests with GET, POST and OPTIONS
+        methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
+    })
+)
+
+export default async function handler (req, res) {
+    await cors(req, res)
     if(req.method === 'POST'){
         const jwt = JWTParser(req, res)
         if (jwt) {
@@ -91,6 +101,3 @@ async function updateSupply(bill){
         })
     }
 }
-
-
-module.exports = cors(handler)

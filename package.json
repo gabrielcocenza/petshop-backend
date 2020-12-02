@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
     "jsonwebtoken": "^8.5.1",
     "micro": "^9.3.4",
-    "micro-cors": "^0.1.1",
     "mongodb": "^3.5.9",
     "mongoose": "^5.10.15",
     "mongoose-unique-validator": "^2.0.3",
