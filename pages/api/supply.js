@@ -1,7 +1,6 @@
 
 const { JWTParser } = require('../../util/jwt')
-const User = require('../../db/user')
-const Supply = require('../../db/supply')
+const Supply = require('../../db/supply.js')
 
 require('../../db/mongodb')
 import Cors from 'cors'

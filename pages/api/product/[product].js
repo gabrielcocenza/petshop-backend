@@ -1,5 +1,5 @@
 
-const Supply = require('../../../db/supply')
+const Supply = require('../../../db/supply.js')
 import Cors from 'cors'
 import initMiddleware from '../../../lib/init-middleware'
 

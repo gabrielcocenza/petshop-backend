@@ -1,5 +1,6 @@
 const Schema = require('mongoose').Schema
 const model = require('mongoose').model
+const { models } = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
 const Sell = new Schema({
@@ -26,9 +27,9 @@ const Sell = new Schema({
         type: Number,
         required: true,
     }
-    
+
 })
 
 Sell.plugin(uniqueValidator)
 
-module.exports = model('Sell', Sell)
+module.exports = models['Sell'] || model('Sell', Sell)

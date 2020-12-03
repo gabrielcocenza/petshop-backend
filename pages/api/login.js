@@ -2,7 +2,7 @@
 const bcrypt = require('bcrypt')
 const JWT = require('../../util/jwt')
 
-const User = require('../../db/user')
+const User = require('../../db/user.js')
 
 require('../../db/mongodb')
 
@@ -17,9 +17,9 @@ const cors = initMiddleware(
     })
 )
 
-export default async function handler (req, res) {
+export default async function handler(req, res) {
     await cors(req, res)
-    if(req.method === 'POST'){
+    if (req.method === 'POST') {
         const body = req.body
         const { email, password } = body
 
@@ -28,12 +28,12 @@ export default async function handler (req, res) {
         }
 
         const user = await User.findOne({ email })
-        if (!user){
+        if (!user) {
             return res.status(400).send('Forbidden. Wrong login or password')
         }
 
         const isUser = await bcrypt.compare(password, user.password)
-        if (!isUser){
+        if (!isUser) {
             return res.status(400).send('Forbidden. Wrong login or password')
         }
 
