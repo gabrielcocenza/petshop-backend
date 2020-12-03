@@ -15,6 +15,7 @@ const Supply = new Schema({
         default: 0
     },
     photo: String,
+    category: String
 })
 
 Supply.plugin(uniqueValidator)
