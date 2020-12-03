@@ -1,7 +1,7 @@
 
 const { JWTParser } = require('../../util/jwt')
-const Sell = require('../../db/sell')
-const Supply = require('../../db/supply')
+const Sell = require('../../db/sell.js')
+const Supply = require('../../db/supply.js')
 
 require('../../db/mongodb')
 import Cors from 'cors'
@@ -15,21 +15,21 @@ const cors = initMiddleware(
     })
 )
 
-export default async function handler (req, res) {
+export default async function handler(req, res) {
     await cors(req, res)
-    if(req.method === 'POST'){
+    if (req.method === 'POST') {
         const jwt = JWTParser(req, res)
         if (jwt) {
             const userId = jwt.id
             const body = req.body
             const { bill, creditCard, totalPrice } = body
-            if ( !userId ||  !bill || !creditCard || !totalPrice ) {
+            if (!userId || !bill || !creditCard || !totalPrice) {
                 return res.status(409).send('Bad params. Bill, creditCard and total_price are required fields')
             }
 
-            else{
+            else {
                 const supplyStatus = await checkSupply(bill, res)
-                if(supplyStatus[0]){
+                if (supplyStatus[0]) {
                     await updateSupply(bill)
                     console.log('supply updated')
                     const sell = {
@@ -40,48 +40,48 @@ export default async function handler (req, res) {
                     console.log('sell created')
                     return res.status(200).send('Purchase concluded')
                 }
-                else{
+                else {
                     return res.status(400).send(supplyStatus[1])
                 }
             }
 
         }
-        else{
+        else {
             return res.status(400).send('Forbidden. Not enough privilege')
         }
     }
 
-    else if(req.method === 'GET'){
+    else if (req.method === 'GET') {
         const jwt = JWTParser(req, res)
         if (jwt) {
             const userId = jwt.id
-            const userPurchases = await Sell.find({userId: userId})
+            const userPurchases = await Sell.find({ userId: userId })
             return res.json(userPurchases)
         }
-        else{
+        else {
             return res.status(400).send('Forbidden. Not enough privilege')
         }
     }
 }
 
 
-async function checkSupply(bill, res){
+async function checkSupply(bill, res) {
     let msg = ''
-    for(billItem in bill){
+    for (billItem in bill) {
         const product = await Supply.findById(bill[billItem].productId)
-        if (!product){
+        if (!product) {
             supplyStatus = false
             msg = 'Bad request. Product with id ' + bill[billItem].productId + ' does not exist'
             return [false, msg]
         }
 
-        if(bill[billItem].quantity > product.stock){
+        if (bill[billItem].quantity > product.stock) {
             msg = 'Bad request. Order of product: ' + bill[billItem].productId + ' bigger than stock '
             msg += 'Current stock is ' + product.stock
             return [false, msg]
         }
 
-        if(product.stock == 0){
+        if (product.stock == 0) {
             msg = 'Bad request. Stock of product: ' + bill[billItem].productId + ' is over'
             return [false, msg]
         }
@@ -90,8 +90,8 @@ async function checkSupply(bill, res){
 }
 
 
-async function updateSupply(bill){
-    for(billItem in bill){
+async function updateSupply(bill) {
+    for (billItem in bill) {
         const id = bill[billItem].productId
         const product = await Supply.findById(id)
 
