@@ -1,4 +1,3 @@
-const { createError } = require('../../util/errors')
 const User = require('../../db/user.js')
 const bcrypt = require('bcrypt')
 
