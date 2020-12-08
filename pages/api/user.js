@@ -1,5 +1,6 @@
 const User = require('../../db/user.js')
 const bcrypt = require('bcrypt')
+const { JWTParser } = require('../../util/jwt')
 
 import Cors from 'cors'
 import initMiddleware from '../../lib/init-middleware'
@@ -45,9 +46,18 @@ export default async function handler(req, res) {
         delete userCreated.password
         return res.status(200).send('ok')
     }
+
     else if (req.method === 'GET') {
-        const { name = 'World' } = req.query
-        res.status(200).send(`Hello ${name}!`)
+        const jwt = JWTParser(req, res)
+        if (jwt) {
+            const result = await User.findById(jwt.id)
+            let user = result.toObject();
+            delete user.password
+            return res.json(user)
+        }
+        else {
+            return res.status(401).send('User not logged')
+        }
     }
 
     else {
