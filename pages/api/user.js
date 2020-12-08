@@ -13,6 +13,8 @@ const cors = initMiddleware(
     Cors({
         // Only allow requests with GET, POST and OPTIONS
         methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        exposedHeaders: ['Authorization'],
 
     })
 )
@@ -53,6 +55,3 @@ export default async function handler(req, res) {
         res.status(400).send(`Method not allowed!`)
     }
 }
-
-
-// module.exports = cors(handler)
