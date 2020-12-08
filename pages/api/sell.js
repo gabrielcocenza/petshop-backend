@@ -13,7 +13,7 @@ const cors = initMiddleware(
         // Only allow requests with GET, POST and OPTIONS
         methods: ['GET', 'POST', 'OPTIONS', 'PATCH'],
         allowedHeaders: ['Content-Type', 'Authorization'],
-        exposedHeaders: ['Authorization']
+        exposedHeaders: ['Authorization'],
     })
 )
 

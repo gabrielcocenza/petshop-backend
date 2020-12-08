@@ -77,6 +77,15 @@ Get all purchases from client: `GET https://petshop-backend.vercel.app/api/sell`
 | totalPrice     | Number                    | sim         |
 
 
+### Search
+Order a purchase: `POST https://petshop-backend.vercel.app/api/search`
+
+| Campo          | Tipo                      | Obrigatorio |
+|----------------|---------------------------|-------------|
+| search         | String                    | sim         |
+
+
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
