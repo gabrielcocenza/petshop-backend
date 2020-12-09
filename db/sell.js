@@ -10,6 +10,7 @@ const Sell = new Schema({
     },
     bill: [
         {
+            name: String,
             productId: String,
             quantity: Number,
             price: Number
