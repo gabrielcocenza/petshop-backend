@@ -69,10 +69,9 @@ export default async function handler(req, res) {
 
 async function checkSupply(bill, res) {
     let msg = ''
-    for (billItem in bill) {
+    for (var billItem in bill) {
         const product = await Supply.findById(bill[billItem].productId)
         if (!product) {
-            supplyStatus = false
             msg = 'Bad request. Product with id ' + bill[billItem].productId + ' does not exist'
             return [false, msg]
         }
@@ -82,18 +81,13 @@ async function checkSupply(bill, res) {
             msg += 'Current stock is ' + product.stock
             return [false, msg]
         }
-
-        if (product.stock == 0) {
-            msg = 'Bad request. Stock of product: ' + bill[billItem].productId + ' is over'
-            return [false, msg]
-        }
     }
     return [true, msg]
 }
 
 
 async function updateSupply(bill) {
-    for (billItem in bill) {
+    for (var billItem in bill) {
         const id = bill[billItem].productId
         const product = await Supply.findById(id)
 
